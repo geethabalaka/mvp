@@ -18,7 +18,7 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 echo 'Building Docker Image'
-                bat 'docker build -t %DOCKER_HUB_REPO%:%$BUILD_NUMBER% .'       
+                bat 'docker build -t %DOCKER_HUB_REPO%:%BUILD_NUMBER% .'       
             }
         }
         stage ('Creating Docker Container') {
