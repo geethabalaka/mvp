@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Creating Docker Container') {
             steps {
-                echo 'Creating Docker Container using %DOCKER_HUB_REPO'
+                echo 'Creating Docker Container using %DOCKER_HUB_REPO%'
                 bat 'docker run -td --name="app%BUILD_NUMBER%" -P 80%BUILD_NUMBER%:80 %DOCKER_HUB_REPO%:%BUILD_NUMBER%'       
             }
         }
