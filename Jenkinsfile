@@ -33,6 +33,7 @@ pipeline {
             steps {
                 echo 'Pushing Image'
                 withDockerRegistry(credentailsId: 'docker_cred' , url: '') {
+                }
                 bat 'docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
         }
