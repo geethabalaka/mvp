@@ -31,8 +31,9 @@ pipeline {
         }
         stage ('Push Image ') {
             steps {
-                withDockerRegistry(credentialsId: 'docker-hub', url: '') {
-}
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_HUB_PSW', usernameVariable: 'DOCKER_HUB_USER')]) {
+                bat 'docker login -u %DOCKER_HUB_USER% -p %DOCKER_HUB_PSW%'    
+} 
                 bat 'docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
         }
