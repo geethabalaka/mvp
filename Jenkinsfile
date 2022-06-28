@@ -24,13 +24,13 @@ pipeline {
         stage ('Creating Docker Container') {
             steps {
                 echo 'Creating Docker Container using %DOCKER_HUB_REPO%'
-                bat 'docker run -td --name="app%BUILD_NUMBER%" -P 80%BUILD_NUMBER%:80 %DOCKER_HUB_REPO%:%BUILD_NUMBER%'       
+                bat 'docker run -td --name="app%BUILD_NUMBER%" -p 80%BUILD_NUMBER%:80 %DOCKER_HUB_REPO%:%BUILD_NUMBER%'       
             }
         }
         stage ('Testing Docker Container') {
             steps {
                 echo 'Testing HTTP Response'
-                bat 'wget localhost:80%BUILD_NUMBER%'       
+                bat 'curl localhost:80%BUILD_NUMBER%'       
             }
         }
         stage ('Push Image ') {
