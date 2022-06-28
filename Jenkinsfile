@@ -5,10 +5,6 @@ pipeline {
     environment {
         DOCKER_HUB_REPO = "6281600/app"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        http_proxy = 'http://127.0.0.1:3128/'
-        https_proxy = 'http://127.0.0.1:3128/'
-        ftp_proxy = 'http://127.0.0.1:3128/'
-        socks_proxy = 'socks://127.0.0.1:3128/'
     }
 
     stages {
@@ -36,7 +32,8 @@ pipeline {
         stage ('Push Image ') {
             steps {
                 echo 'Pushing Image'
-                bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR%  --password-stdin && docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
+                withDockerRegistry(credentailsId: 'docker_cred' , url: '') {
+                bat 'docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
         }
     }
