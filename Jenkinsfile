@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_REPO = "6281600/app"
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        
     }
 
     stages {
@@ -32,7 +32,7 @@ pipeline {
         stage ('Push Image ') {
             steps {
                 echo 'Pushing Image'
-                withDockerRegistry(credentailsId: 'docker_cred' , url: '') {
+                withDockerRegistry(credentialsId: 'docker_cred' , url: '') {
                 }
                 bat 'docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
