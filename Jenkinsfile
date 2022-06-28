@@ -31,9 +31,8 @@ pipeline {
         }
         stage ('Push Image ') {
             steps {
-                echo 'Pushing Image'
-                withDockerRegistry(credentialsId: 'geetha1' , url: '') {
-                }
+                withDockerRegistry(credentialsId: 'docker-hub', url: '') {
+}
                 bat 'docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
         }
