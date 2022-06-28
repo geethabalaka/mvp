@@ -18,25 +18,25 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 echo 'Building Docker Image'
-                sh 'docker build -t $DOCKER_HUB_REPO:$BUILD_NUMBER .'       
+                bat 'docker build -t %DOCKER_HUB_REPO%:%$BUILD_NUMBER% .'       
             }
         }
         stage ('Creating Docker Container') {
             steps {
-                echo 'Creating Docker Container using $DOCKER_HUB_REPO'
-                sh 'docker run -td --name="app$BUILD_NUMBER" -P 80$BUILD_NUMBER:80 $DOCKER_HUB_REPO:$BUILD_NUMBER'       
+                echo 'Creating Docker Container using %DOCKER_HUB_REPO'
+                bat 'docker run -td --name="app%BUILD_NUMBER%" -P 80%BUILD_NUMBER%:80 %DOCKER_HUB_REPO%:%BUILD_NUMBER%'       
             }
         }
         stage ('Testing Docker Container') {
             steps {
                 echo 'Testing HTTP Response'
-                sh 'wget localhost:80$BUILD_NUMBER'       
+                bat 'wget localhost:80%BUILD_NUMBER%'       
             }
         }
         stage ('Push Image ') {
             steps {
                 echo 'Pushing Image'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR  --password-stdin && docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
+                bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR%  --password-stdin && docker push %DOCKER_HUB_REPO%:%BUILD_NUMBER%'
             }
         }
     }
